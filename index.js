@@ -5,7 +5,7 @@ const idbStore = idb.createStore("firefox-idb-repro");
 
 function log(msg) {
   outputEl.innerHTML += msg;
-  outputEl.scrollTo(0, outputEl.scrollHeight);
+  window.scrollTo(0, document.body.scrollHeight);
 }
 
 async function fetchDefinitions() {

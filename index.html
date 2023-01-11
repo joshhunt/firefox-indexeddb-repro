@@ -7,6 +7,21 @@
     <title>Firefox IndexedDB Repro</title>
 
     <style>
+      body {
+        margin-top: 0;
+      }
+
+      .top {
+        position: sticky;
+        top: 0;
+        background: white;
+        padding-top: 8px;
+      }
+
+      .top > *:first-child {
+        margin-top: 0;
+      }
+
       .test-text {
         transition: all 500ms;
       }
@@ -16,87 +31,60 @@
         background: black;
       }
 
-      .output {
-        height: 50vh;
-        overflow: auto;
-        background: #dfe6e9;
-        padding: 0.5em;
-      }
-
-      .loader {
-        width: 2em;
-        height: 2em;
-        border: 5px solid #fff;
-        border-bottom-color: #ff3d00;
-        border-radius: 50%;
-        display: inline-block;
-        box-sizing: border-box;
-        animation: rotation 1s linear infinite;
-      }
-
       li:not(:first-child) {
         padding-top: 0.5em;
-      }
-
-      @keyframes rotation {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
       }
     </style>
   </head>
 
   <body>
-    <h1></h1>
+    <div class="top">
+      <p class="test-text">
+        Storing and retrieving large amounts of data from IndexedDB. Warning -
+        this will load ~180mb of JSON from ~70 files.
+      </p>
 
-    <p class="test-text">
-      Storing and retrieving large amounts of data from IndexedDB. Warning -
-      this will load ~180mb of JSON from ~70 files.
-    </p>
+      <ol>
+        <li>
+          Click
+          <button class="js-fetch-button">Fetch + write to IndexedDB</button> to
+          download 190mb of JSON and store it across 55 rows in IndexedDB (using
+          <a href="https://github.com/jakearchibald/idb-keyval">idb-keyval</a>)
+        </li>
 
-    <ol>
-      <li>
-        Click
-        <button class="js-fetch-button">Fetch + write to IndexedDB</button> to
-        download 190mb of JSON and store it across 55 rows in IndexedDB (using
-        <a href="https://github.com/jakearchibald/idb-keyval">idb-keyval</a>)
-      </li>
+        <li>
+          Click
+          <button class="js-idb-load-many-button">
+            Load many from from IndexedDB</button
+          >. This will use <code>IDBObjectStore.getAll()</code> to load all
+          values from IndexedDB in one transation
 
-      <li>
-        Click
-        <button class="js-idb-load-many-button">
-          Load many from from IndexedDB</button
-        >. This will use <code>IDBObjectStore.getAll()</code> to load all values
-        from IndexedDB in one transation
+          <ul>
+            <li>This crashes on Firefox</li>
+          </ul>
+        </li>
 
-        <ul>
-          <li>This crashes on Firefox</li>
-        </ul>
-      </li>
+        <li>
+          Click
+          <button class="js-idb-load-one-at-a-time-button">
+            Load one at a time from from IndexedDB
+          </button>
+          to load all values from IndexedDB serially using
+          <code>IDBObjectStore.get()</code>
 
-      <li>
-        Click
-        <button class="js-idb-load-one-at-a-time-button">
-          Load one at a time from from IndexedDB
-        </button>
-        to load all values from IndexedDB serially using
-        <code>IDBObjectStore.get()</code>
+          <ul>
+            <li>On my computer Firefox takes ~9000ms, Chrome takes ~2000ms</li>
+          </ul>
+        </li>
 
-        <ul>
-          <li>On my computer Firefox takes ~9000ms, Chrome takes ~2000ms</li>
-        </ul>
-      </li>
-
-      <li>
-        Optionally,
-        <button class="js-idb-load-one-large-button">
-          Load one large row from IndexedDB
-        </button>
-      </li>
-    </ol>
+        <li>
+          Optionally,
+          <button class="js-idb-load-one-large-button">
+            Load one large row from IndexedDB
+          </button>
+        </li>
+      </ol>
+    </div>
 
     <pre class="output"></pre>
 

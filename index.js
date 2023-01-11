@@ -12,16 +12,17 @@ async function fetchDefinitions() {
   let loadedCounter = 0;
 
   const allTables = {};
+  const total = definitionsList.length;
 
   for (const [tableName, tablePath] of definitionsList) {
+    loadedCounter += 1;
+    log(`Fetching ${loadedCounter}/${total} ${tableName} from network...`);
+
     const resp = await fetch(tablePath);
     const table = await resp.json();
     allTables[tableName] = table;
-    loadedCounter += 1;
 
-    log(
-      `Fetched ${loadedCounter}/${definitionsList.length} ${tableName} from network\n`
-    );
+    log(" done\n");
   }
 
   log("Fetched all JSON from network.\n\n");
@@ -93,7 +94,7 @@ const idbLoadInventoryItemsButtonEl = document.querySelector(
 
 function handleError(error) {
   console.error(error);
-  log("ERROR: " + error);
+  log("\n\nERROR: " + error);
 }
 
 fetchButtonEl.addEventListener("click", () => {

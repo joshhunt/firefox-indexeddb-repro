@@ -1,0 +1,19 @@
+{
+  "name": "firefox-indexeddb-repro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "node ./download-definitions.js",
+    "start": "serve"
+  },
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "dependencies": {
+    "@d2api/manifest-node": "^2.0.3",
+    "idb-keyval": "^6.2.0",
+    "serve": "^14.1.2"
+  }
+}

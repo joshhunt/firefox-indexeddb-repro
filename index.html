@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firefox IndexedDB Repro</title>
+
+    <style>
+      .test-text {
+        transition: all 500ms;
+      }
+
+      .test-text:hover {
+        color: white;
+        background: black;
+      }
+
+      .output {
+        height: 50vh;
+        overflow: auto;
+        background: #dfe6e9;
+      }
+
+      .loader {
+        width: 2em;
+        height: 2em;
+        border: 5px solid #fff;
+        border-bottom-color: #ff3d00;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1></h1>
+
+    <p class="test-text">
+      First fetch the data and write to IndexedDB, then try to load it back
+    </p>
+
+    <button class="js-fetch-button">Fetch + write to IndexedDB</button>
+
+    <button class="js-idb-load-many-button">
+      Load many from from IndexedDB
+    </button>
+
+    <button class="js-idb-load-one-at-a-time-button">
+      Load one at a time from from IndexedDB
+    </button>
+
+    <button class="js-idb-load-one-large-button">
+      Load one large row from IndexedDB
+    </button>
+
+    <pre class="output"></pre>
+
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>

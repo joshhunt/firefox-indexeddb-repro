@@ -20,6 +20,7 @@
         height: 50vh;
         overflow: auto;
         background: #dfe6e9;
+        padding: 0.5em;
       }
 
       .loader {
@@ -31,6 +32,10 @@
         display: inline-block;
         box-sizing: border-box;
         animation: rotation 1s linear infinite;
+      }
+
+      li:not(:first-child) {
+        padding-top: 0.5em;
       }
 
       @keyframes rotation {
@@ -48,22 +53,50 @@
     <h1></h1>
 
     <p class="test-text">
-      First fetch the data and write to IndexedDB, then try to load it back
+      Storing and retrieving large amounts of data from IndexedDB. Warning -
+      this will load ~180mb of JSON from ~70 files.
     </p>
 
-    <button class="js-fetch-button">Fetch + write to IndexedDB</button>
+    <ol>
+      <li>
+        Click
+        <button class="js-fetch-button">Fetch + write to IndexedDB</button> to
+        download 190mb of JSON and store it across 55 rows in IndexedDB (using
+        <a href="https://github.com/jakearchibald/idb-keyval">idb-keyval</a>)
+      </li>
 
-    <button class="js-idb-load-many-button">
-      Load many from from IndexedDB
-    </button>
+      <li>
+        Click
+        <button class="js-idb-load-many-button">
+          Load many from from IndexedDB</button
+        >. This will use <code>IDBObjectStore.getAll()</code> to load all values
+        from IndexedDB in one transation
 
-    <button class="js-idb-load-one-at-a-time-button">
-      Load one at a time from from IndexedDB
-    </button>
+        <ul>
+          <li>This crashes on Firefox</li>
+        </ul>
+      </li>
 
-    <button class="js-idb-load-one-large-button">
-      Load one large row from IndexedDB
-    </button>
+      <li>
+        Click
+        <button class="js-idb-load-one-at-a-time-button">
+          Load one at a time from from IndexedDB
+        </button>
+        to load all values from IndexedDB serially using
+        <code>IDBObjectStore.get()</code>
+
+        <ul>
+          <li>On my computer Firefox takes ~9000ms, Chrome takes ~2000ms</li>
+        </ul>
+      </li>
+
+      <li>
+        Optionally,
+        <button class="js-idb-load-one-large-button">
+          Load one large row from IndexedDB
+        </button>
+      </li>
+    </ol>
 
     <pre class="output"></pre>
 

@@ -3,15 +3,9 @@ import definitionsList from "./definitions-list.js";
 
 const idbStore = idb.createStore("firefox-idb-repro");
 
-const LOG_TO_CONSOLE = false;
-
 function log(msg) {
-  if (LOG_TO_CONSOLE) {
-    console.log(msg);
-  } else {
-    outputEl.innerHTML += msg;
-    outputEl.scrollTo(0, outputEl.scrollHeight);
-  }
+  outputEl.innerHTML += msg;
+  outputEl.scrollTo(0, outputEl.scrollHeight);
 }
 
 async function fetchDefinitions() {
@@ -97,38 +91,23 @@ const idbLoadInventoryItemsButtonEl = document.querySelector(
   ".js-idb-load-one-large-button"
 );
 
-fetchButtonEl.addEventListener("click", async () => {
-  try {
-    await fetchDefinitions();
-  } catch (error) {
-    console.error(error);
-    log("ERROR: " + error);
-  }
+function handleError(error) {
+  console.error(error);
+  log("ERROR: " + error);
+}
+
+fetchButtonEl.addEventListener("click", () => {
+  fetchDefinitions().catch(handleError);
 });
 
-idbLoadManyButtonEl.addEventListener("click", async () => {
-  try {
-    await loadManyFromIndexedDB();
-  } catch (error) {
-    console.error(error);
-    log("ERROR: " + error);
-  }
+idbLoadManyButtonEl.addEventListener("click", () => {
+  loadManyFromIndexedDB().catch(handleError);
 });
 
-idbLoadOneAtATimeButtonEl.addEventListener("click", async () => {
-  try {
-    await loadOneAtATimeFromIndexedDB();
-  } catch (error) {
-    console.error(error);
-    log("ERROR: " + error);
-  }
+idbLoadOneAtATimeButtonEl.addEventListener("click", () => {
+  loadOneAtATimeFromIndexedDB().catch(handleError);
 });
 
-idbLoadInventoryItemsButtonEl.addEventListener("click", async () => {
-  try {
-    await loadInventoryItemsFromIndexedDB();
-  } catch (error) {
-    console.error(error);
-    log("ERROR: " + error);
-  }
+idbLoadInventoryItemsButtonEl.addEventListener("click", () => {
+  loadInventoryItemsFromIndexedDB().catch(handleError);
 });

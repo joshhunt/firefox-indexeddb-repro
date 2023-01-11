@@ -5,15 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "node ./download-definitions.js",
+    "download-data": "node ./download-definitions.js",
+    "build": "npm run download-data && npm prune --omit=dev && rm -rf dist && mkdir dist && rsync -rv * dist --exclude ./dist",
     "start": "serve"
   },
   "author": "",
   "type": "module",
   "license": "ISC",
   "dependencies": {
+    "idb-keyval": "^6.2.0"
+  },
+  "devDependencies": {
     "@d2api/manifest-node": "^2.0.3",
-    "idb-keyval": "^6.2.0",
     "serve": "^14.1.2"
   }
 }

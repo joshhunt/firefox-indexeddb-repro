@@ -52,16 +52,15 @@
         <li>
           Click
           <button class="js-fetch-button">Fetch + write to IndexedDB</button> to
-          download 190mb of JSON and store it across 55 rows in IndexedDB (using
-          <a href="https://github.com/jakearchibald/idb-keyval">idb-keyval</a>)
+          download 190mb of JSON and store it across 55 rows in IndexedDB
         </li>
 
         <li>
           Click
           <button class="js-idb-load-many-button">
             Load many from from IndexedDB</button
-          >. This will use <code>IDBObjectStore.getAll()</code> to load all
-          values from IndexedDB in one transation
+          >. This will use <code>IDBObjectStore.getAll()</code> to load all rows
+          from IndexedDB in one transation
 
           <ul>
             <li>This crashes on Firefox</li>
@@ -71,9 +70,10 @@
         <li>
           Click
           <button class="js-idb-load-one-at-a-time-button">
-            Load one at a time from from IndexedDB
+            Load all individually from IndexedDB
           </button>
-          to load all values from IndexedDB serially using
+          to load all rows from IndexedDB serially using
+          <code>IDBObjectStore.getAllKeys()</code> +
           <code>IDBObjectStore.get()</code>
 
           <ul>

@@ -1,7 +1,10 @@
-import * as idb from "./node_modules/idb-keyval/dist/index.js";
 import definitionsList from "./definitions-list.js";
-
-const idbStore = idb.createStore("firefox-idb-repro");
+import {
+  indexedDBPut,
+  indexedDBGet,
+  indexedDBGetAll,
+  indexedDBGetAllKeys,
+} from "./idb.js";
 
 function log(msg) {
   outputEl.innerHTML += msg;
@@ -31,35 +34,36 @@ async function fetchDefinitions() {
     const table = allTables[tableName];
 
     log(`Writing ${tableName} to IndexedDB...`);
-    await idb.set(tableName, table, idbStore);
+    await indexedDBPut(tableName, { tableName, table });
     log(` done\n`);
   }
 
   log("Wrote all to IndexedDB.\n");
 }
 
-async function loadManyFromIndexedDB() {
-  log("\nLoading all tables from IndexedDB\n");
+async function getAllRows() {
+  log("\nLoading IDBObjectStore.getAll() from IndexedDB\n");
 
   const startTime = performance.now();
-  await idb.entries(idbStore);
+  const results = await indexedDBGetAll();
   const endTime = performance.now();
 
-  const duration = endTime - startTime;
-  log(`Loadinged all tables from IndexedDB in ${duration}ms\n`);
+  log(
+    `Loaded ${results.length} rows from IndexedDB in ${endTime - startTime}ms\n`
+  );
 }
 
-async function loadOneAtATimeFromIndexedDB() {
+async function getRowsIndividually() {
   log("\nLoading tables from IndexedDB one at a time\n");
 
   const startTime = performance.now();
 
-  const keys = await idb.keys(idbStore);
+  const keys = await indexedDBGetAllKeys();
   log(`Got ${keys.length} keys from IndexedDB\n`);
 
   for (const key of keys) {
     log(`Reading ${key} from IndexedDB...`);
-    await idb.get(key, idbStore);
+    await indexedDBGet(key);
     log(` done\n`);
   }
 
@@ -74,7 +78,7 @@ async function loadInventoryItemsFromIndexedDB() {
 
   const startTime = performance.now();
 
-  await idb.get("InventoryItem", idbStore);
+  await indexedDBGet("InventoryItem");
 
   const endTime = performance.now();
   const duration = endTime - startTime;
@@ -102,11 +106,11 @@ fetchButtonEl.addEventListener("click", () => {
 });
 
 idbLoadManyButtonEl.addEventListener("click", () => {
-  loadManyFromIndexedDB().catch(handleError);
+  getAllRows().catch(handleError);
 });
 
 idbLoadOneAtATimeButtonEl.addEventListener("click", () => {
-  loadOneAtATimeFromIndexedDB().catch(handleError);
+  getRowsIndividually().catch(handleError);
 });
 
 idbLoadInventoryItemsButtonEl.addEventListener("click", () => {

@@ -12,9 +12,7 @@
   "author": "",
   "type": "module",
   "license": "ISC",
-  "dependencies": {
-    "idb-keyval": "^6.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@d2api/manifest-node": "^2.0.3",
     "serve": "^14.1.2"

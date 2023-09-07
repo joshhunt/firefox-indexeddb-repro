@@ -4,6 +4,7 @@ import {
   indexedDBGet,
   indexedDBGetAll,
   indexedDBGetAllKeys,
+  indexedDBGetAllCursor,
 } from "./idb.js";
 
 function log(msg) {
@@ -53,6 +54,18 @@ async function getAllRows() {
   );
 }
 
+async function getAllRowsWithCursor() {
+  log("\nLoading IDBObjectStore.openCursor() from IndexedDB\n");
+
+  const startTime = performance.now();
+  const results = await indexedDBGetAllCursor();
+  const endTime = performance.now();
+
+  log(
+    `Loaded ${results.length} rows from IndexedDB in ${endTime - startTime}ms\n`
+  );
+}
+
 async function getRowsIndividually() {
   log("\nLoading tables from IndexedDB one at a time\n");
 
@@ -89,6 +102,9 @@ async function loadInventoryItemsFromIndexedDB() {
 const outputEl = document.querySelector(".output");
 const fetchButtonEl = document.querySelector(".js-fetch-button");
 const idbLoadManyButtonEl = document.querySelector(".js-idb-load-many-button");
+const idbLoadCursorButtonEl = document.querySelector(
+  ".js-idb-load-cursor-button"
+);
 const idbLoadOneAtATimeButtonEl = document.querySelector(
   ".js-idb-load-one-at-a-time-button"
 );
@@ -115,4 +131,8 @@ idbLoadOneAtATimeButtonEl.addEventListener("click", () => {
 
 idbLoadInventoryItemsButtonEl.addEventListener("click", () => {
   loadInventoryItemsFromIndexedDB().catch(handleError);
+});
+
+idbLoadCursorButtonEl.addEventListener("click", () => {
+  getAllRowsWithCursor().catch(handleError);
 });

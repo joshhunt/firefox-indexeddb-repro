@@ -7,12 +7,20 @@ manifestNode
   .then(async () => {
     console.log("Loaded definitions");
 
+    const tables = [];
+
     for (const tableName in manifestNode.allManifest) {
       const table = manifestNode.allManifest[tableName];
       const tablePath = path.join(".", "definitions", `${tableName}.json`);
       console.log("Writing", tableName, "to", tablePath);
       await fs.writeFile(tablePath, JSON.stringify(table));
+
+      tables.push([tableName, "./" + tablePath]);
     }
+
+    const defsListFile = `export default ${JSON.stringify(tables, null, 2)};`;
+
+    await fs.writeFile("./definitions-list.js", defsListFile);
 
     await fs.rm(path.join(".", "manifests"), {
       recursive: true,

@@ -62,22 +62,24 @@ async function fetchDefinitions() {
 async function getAllRows() {
   log("\nLoading IDBObjectStore.openCursor() from IndexedDB\n");
 
-  const startTime = performance.now();
-  console.time("load all with cursor");
+  const startMark = performance.mark("getAllRows-start");
   const results = await indexedDBGetAllCursor();
-  console.timeEnd("load all with cursor");
-  const endTime = performance.now();
+  const endMark = performance.mark("getAllRows-end");
+  const measureMark = performance.measure(
+    "getAllRows-duration",
+    startMark.name,
+    endMark.name
+  );
 
   log(
-    `Loaded ${results.length} rows from IndexedDB in ${endTime - startTime}ms\n`
+    `Loaded ${results.length} rows using IDBObjectStore.openCursor in ${measureMark.duration}ms\n`
   );
 }
 
 async function getAllRowsWithIndex() {
   log("\nLoading IDBIndex.openCursor() from IndexedDB\n");
 
-  const startTime = performance.now();
-  console.time("load all with index cursor");
+  const startMark = performance.mark("getAllRowsWithIndex-start");
 
   const results = [];
   const db = await getDb();
@@ -96,13 +98,15 @@ async function getAllRowsWithIndex() {
   };
 
   function whenFinished(results) {
-    console.timeEnd("load all with index cursor");
-    const endTime = performance.now();
+    const endMark = performance.mark("getAllRowsWithIndex-end");
+    const measureMark = performance.measure(
+      "getAllRowsWithIndex-duration",
+      startMark.name,
+      endMark.name
+    );
 
     log(
-      `Loaded ${results.length} rows from IndexedDB in ${
-        endTime - startTime
-      }ms\n`
+      `Loaded ${results.length} rows using IDBIndex.openCursor in ${measureMark.duration}ms\n`
     );
   }
 }

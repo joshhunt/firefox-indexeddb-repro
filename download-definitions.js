@@ -18,7 +18,7 @@ manifestNode
       console.log("Writing", tableName, "to", tablePath);
       await fs.writeFile(tablePath, JSON.stringify(table));
 
-      tables.push([tableName, "./" + tablePath]);
+      tables.push([tableName, "/" + tablePath]);
     }
 
     const defsListFile = `export default ${JSON.stringify(tables, null, 2)};`;

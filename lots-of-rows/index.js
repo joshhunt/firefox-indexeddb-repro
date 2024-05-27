@@ -71,27 +71,6 @@ async function getAllRows() {
   log(
     `Loaded ${results.length} rows from IndexedDB in ${endTime - startTime}ms\n`
   );
-
-  const byTable = {};
-
-  for (const row of results) {
-    const { tableName, key, definition } = row;
-
-    if (!byTable[tableName]) {
-      byTable[tableName] = [];
-    }
-
-    byTable[tableName].push(definition);
-  }
-
-  // log number of rows for each table
-  for (const tableName in byTable) {
-    log(`${tableName}: ${byTable[tableName].length}\n`);
-
-    if (tableName === "Race") {
-      console.log(byTable[tableName]);
-    }
-  }
 }
 
 async function getAllRowsWithIndex() {
@@ -125,27 +104,6 @@ async function getAllRowsWithIndex() {
         endTime - startTime
       }ms\n`
     );
-
-    const byTable = {};
-
-    for (const row of results) {
-      const { tableName, key, definition } = row;
-
-      if (!byTable[tableName]) {
-        byTable[tableName] = [];
-      }
-
-      byTable[tableName].push(definition);
-    }
-
-    // log number of rows for each table
-    for (const tableName in byTable) {
-      log(`${tableName}: ${byTable[tableName].length}\n`);
-
-      if (tableName === "Race") {
-        console.log(byTable[tableName]);
-      }
-    }
   }
 }
 

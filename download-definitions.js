@@ -10,6 +10,9 @@ manifestNode
     const tables = [];
 
     for (const tableName in manifestNode.allManifest) {
+      if (tableName === "InventoryItemLite") {
+        continue;
+      }
       const table = manifestNode.allManifest[tableName];
       const tablePath = path.join(".", "definitions", `${tableName}.json`);
       console.log("Writing", tableName, "to", tablePath);

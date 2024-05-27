@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IDB repro - lots of rows</title>
+
+    <style>
+      body {
+        margin-top: 0;
+      }
+
+      .top {
+        position: sticky;
+        top: 0;
+        background: white;
+        padding: 8px 0;
+      }
+
+      .top > *:first-child {
+        margin-top: 0;
+      }
+
+      .top > *:last-child {
+        margin-bottom: 0;
+      }
+
+      .test-text {
+        transition: all 500ms;
+      }
+
+      .test-text:hover {
+        color: white;
+        background: black;
+      }
+
+      li:not(:first-child) {
+        padding-top: 0.5em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="top">
+      <p class="test-text">
+        Retrieving lots of rows from IndexedDB. Warning - this will load ~180mb
+        of JSON from ~100k rows files.
+      </p>
+
+      <ol>
+        <li>
+          Click
+          <button class="js-fetch-button">Fetch + write to IndexedDB</button> to
+          download 190mb of JSON and store it across ~100k rows in IndexedDB
+        </li>
+
+        <li>
+          Click
+          <button class="js-idb-load-cursor-button">Load</button> to load all
+          ~100k rows using openCursor
+        </li>
+      </ol>
+
+      <p>Check the JS console for errors - this is just a simple repro :)</p>
+    </div>
+
+    <pre class="output"></pre>
+
+    <script type="module" src="/lots-of-rows/index.js"></script>
+  </body>
+</html>

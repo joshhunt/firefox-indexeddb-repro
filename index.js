@@ -5,6 +5,7 @@ import {
   indexedDBGetAll,
   indexedDBGetAllKeys,
   indexedDBGetAllCursor,
+  indexedDBOpenKeyCursor,
 } from "./idb.js";
 
 function log(msg) {
@@ -33,9 +34,18 @@ async function fetchDefinitions() {
 
   for (const tableName in allTables) {
     const table = allTables[tableName];
+    log(
+      `Writing ${
+        Object.keys(table).length
+      } ${tableName} definitions to IndexedDB individually...`
+    );
 
-    log(`Writing ${tableName} to IndexedDB...`);
-    await indexedDBPut(tableName, { tableName, table });
+    for (const hash in table) {
+      const definition = table[hash];
+      const key = `${tableName}:${hash}`;
+      await indexedDBPut(key, { tableName, hash, definition });
+    }
+
     log(` done\n`);
   }
 
@@ -99,6 +109,19 @@ async function loadInventoryItemsFromIndexedDB() {
   log(`Loaded just one large table from IndexedDB in ${duration}ms\n`);
 }
 
+async function countWithOpenKeyCursor() {
+  log("\nCounting all keys using open key cursor\n");
+
+  const startTime = performance.now();
+
+  const keyCount = await indexedDBOpenKeyCursor();
+
+  const endTime = performance.now();
+  const duration = endTime - startTime;
+
+  log(`Counted ${keyCount} keys with openKeyCursor in ${duration}ms\n`);
+}
+
 const outputEl = document.querySelector(".output");
 const fetchButtonEl = document.querySelector(".js-fetch-button");
 const idbLoadManyButtonEl = document.querySelector(".js-idb-load-many-button");
@@ -136,3 +159,9 @@ idbLoadInventoryItemsButtonEl.addEventListener("click", () => {
 idbLoadCursorButtonEl.addEventListener("click", () => {
   getAllRowsWithCursor().catch(handleError);
 });
+
+document
+  .querySelector(".js-idb-openKeyCursor-button")
+  .addEventListener("click", () => {
+    countWithOpenKeyCursor().catch(handleError);
+  });

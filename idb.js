@@ -74,11 +74,33 @@ export async function indexedDBGetAllCursor() {
     cursorRequest.onsuccess = (event) => {
       const cursor = event.target.result;
       if (cursor) {
-        console.log("cursor value", cursor.value.tableName);
         results.push(cursor.value);
         cursor.continue();
       } else {
         resolve(results);
+      }
+    };
+  });
+}
+
+export async function indexedDBOpenKeyCursor() {
+  const db = await dbPromise;
+
+  const keyCursorRequest = db
+    .transaction(STORE_NAME, "readonly")
+    .objectStore(STORE_NAME)
+    .openKeyCursor();
+
+  return new Promise((resolve) => {
+    let keyCounter = 0;
+
+    keyCursorRequest.onsuccess = (event) => {
+      const cursor = event.target.result;
+      if (cursor) {
+        keyCounter += 1;
+        cursor.continue();
+      } else {
+        resolve(keyCounter);
       }
     };
   });

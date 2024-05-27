@@ -1,67 +1,252 @@
+
 export default [
-  ["Activity", "./definitions/Activity.json"],
-  ["ActivityGraph", "./definitions/ActivityGraph.json"],
-  ["ActivityMode", "./definitions/ActivityMode.json"],
-  ["ActivityModifier", "./definitions/ActivityModifier.json"],
-  ["ActivityType", "./definitions/ActivityType.json"],
-  ["Artifact", "./definitions/Artifact.json"],
-  ["BreakerType", "./definitions/BreakerType.json"],
-  ["Checklist", "./definitions/Checklist.json"],
-  ["Class", "./definitions/Class.json"],
-  ["Collectible", "./definitions/Collectible.json"],
-  ["DamageType", "./definitions/DamageType.json"],
-  ["Destination", "./definitions/Destination.json"],
-  ["EnergyType", "./definitions/EnergyType.json"],
-  ["EquipmentSlot", "./definitions/EquipmentSlot.json"],
-  ["EventCard", "./definitions/EventCard.json"],
-  ["Faction", "./definitions/Faction.json"],
-  ["Gender", "./definitions/Gender.json"],
-  ["GuardianRankConstants", "./definitions/GuardianRankConstants.json"],
-  ["GuardianRank", "./definitions/GuardianRank.json"],
-  ["InventoryBucket", "./definitions/InventoryBucket.json"],
-  ["InventoryItem", "./definitions/InventoryItem.json"],
-  ["InventoryItemLite", "./definitions/InventoryItemLite.json"],
-  ["ItemCategory", "./definitions/ItemCategory.json"],
-  ["ItemTierType", "./definitions/ItemTierType.json"],
-  ["LoadoutColor", "./definitions/LoadoutColor.json"],
-  ["LoadoutConstants", "./definitions/LoadoutConstants.json"],
-  ["LoadoutIcon", "./definitions/LoadoutIcon.json"],
-  ["LoadoutName", "./definitions/LoadoutName.json"],
-  ["Location", "./definitions/Location.json"],
-  ["Lore", "./definitions/Lore.json"],
-  ["MaterialRequirementSet", "./definitions/MaterialRequirementSet.json"],
-  ["MedalTier", "./definitions/MedalTier.json"],
-  ["Metric", "./definitions/Metric.json"],
-  ["Milestone", "./definitions/Milestone.json"],
-  ["Objective", "./definitions/Objective.json"],
-  ["Place", "./definitions/Place.json"],
-  ["PlugSet", "./definitions/PlugSet.json"],
-  ["PowerCap", "./definitions/PowerCap.json"],
-  ["PresentationNode", "./definitions/PresentationNode.json"],
-  ["Progression", "./definitions/Progression.json"],
+  [
+    "GuardianRank",
+    "./definitions/GuardianRank.json"
+  ],
+  [
+    "InventoryBucket",
+    "./definitions/InventoryBucket.json"
+  ],
+  [
+    "Artifact",
+    "./definitions/Artifact.json"
+  ],
+  [
+    "GuardianRankConstants",
+    "./definitions/GuardianRankConstants.json"
+  ],
+  [
+    "Class",
+    "./definitions/Class.json"
+  ],
+  [
+    "DamageType",
+    "./definitions/DamageType.json"
+  ],
+  [
+    "PowerCap",
+    "./definitions/PowerCap.json"
+  ],
+  [
+    "ItemTierType",
+    "./definitions/ItemTierType.json"
+  ],
+  [
+    "Gender",
+    "./definitions/Gender.json"
+  ],
+  [
+    "RewardSource",
+    "./definitions/RewardSource.json"
+  ],
+  [
+    "VendorGroup",
+    "./definitions/VendorGroup.json"
+  ],
+  [
+    "Race",
+    "./definitions/Race.json"
+  ],
+  [
+    "BreakerType",
+    "./definitions/BreakerType.json"
+  ],
+  [
+    "SocialCommendation",
+    "./definitions/SocialCommendation.json"
+  ],
+  [
+    "SocketCategory",
+    "./definitions/SocketCategory.json"
+  ],
+  [
+    "SeasonPass",
+    "./definitions/SeasonPass.json"
+  ],
+  [
+    "ReportReasonCategory",
+    "./definitions/ReportReasonCategory.json"
+  ],
+  [
+    "LoadoutConstants",
+    "./definitions/LoadoutConstants.json"
+  ],
+  [
+    "MedalTier",
+    "./definitions/MedalTier.json"
+  ],
+  [
+    "Place",
+    "./definitions/Place.json"
+  ],
+  [
+    "SocialCommendationNode",
+    "./definitions/SocialCommendationNode.json"
+  ],
+  [
+    "ActivityType",
+    "./definitions/ActivityType.json"
+  ],
+  [
+    "ActivityMode",
+    "./definitions/ActivityMode.json"
+  ],
+  [
+    "Stat",
+    "./definitions/Stat.json"
+  ],
+  [
+    "Season",
+    "./definitions/Season.json"
+  ],
+  [
+    "Trait",
+    "./definitions/Trait.json"
+  ],
+  [
+    "Faction",
+    "./definitions/Faction.json"
+  ],
+  [
+    "MaterialRequirementSet",
+    "./definitions/MaterialRequirementSet.json"
+  ],
+  [
+    "StatGroup",
+    "./definitions/StatGroup.json"
+  ],
+  [
+    "ItemCategory",
+    "./definitions/ItemCategory.json"
+  ],
+  [
+    "Destination",
+    "./definitions/Destination.json"
+  ],
+  [
+    "ActivityModifier",
+    "./definitions/ActivityModifier.json"
+  ],
+  [
+    "Milestone",
+    "./definitions/Milestone.json"
+  ],
+  [
+    "Metric",
+    "./definitions/Metric.json"
+  ],
+  [
+    "TalentGrid",
+    "./definitions/TalentGrid.json"
+  ],
+  [
+    "Location",
+    "./definitions/Location.json"
+  ],
+  [
+    "EventCard",
+    "./definitions/EventCard.json"
+  ],
+  [
+    "Progression",
+    "./definitions/Progression.json"
+  ],
+  [
+    "ProgressionMapping",
+    "./definitions/ProgressionMapping.json"
+  ],
+  [
+    "EnergyType",
+    "./definitions/EnergyType.json"
+  ],
   [
     "ProgressionLevelRequirement",
-    "./definitions/ProgressionLevelRequirement.json",
+    "./definitions/ProgressionLevelRequirement.json"
   ],
-  ["ProgressionMapping", "./definitions/ProgressionMapping.json"],
-  ["Race", "./definitions/Race.json"],
-  ["Record", "./definitions/Record.json"],
-  ["ReportReasonCategory", "./definitions/ReportReasonCategory.json"],
-  ["RewardSource", "./definitions/RewardSource.json"],
-  ["SandboxPattern", "./definitions/SandboxPattern.json"],
-  ["SandboxPerk", "./definitions/SandboxPerk.json"],
-  ["Season", "./definitions/Season.json"],
-  ["SeasonPass", "./definitions/SeasonPass.json"],
-  ["SocialCommendation", "./definitions/SocialCommendation.json"],
-  ["SocialCommendationNode", "./definitions/SocialCommendationNode.json"],
-  ["SocketCategory", "./definitions/SocketCategory.json"],
-  ["SocketType", "./definitions/SocketType.json"],
-  ["Stat", "./definitions/Stat.json"],
-  ["StatGroup", "./definitions/StatGroup.json"],
-  ["TalentGrid", "./definitions/TalentGrid.json"],
-  ["Trait", "./definitions/Trait.json"],
-  ["Unlock", "./definitions/Unlock.json"],
-  ["UnlockValue", "./definitions/UnlockValue.json"],
-  ["Vendor", "./definitions/Vendor.json"],
-  ["VendorGroup", "./definitions/VendorGroup.json"],
+  [
+    "LoadoutName",
+    "./definitions/LoadoutName.json"
+  ],
+  [
+    "LoadoutIcon",
+    "./definitions/LoadoutIcon.json"
+  ],
+  [
+    "SocketType",
+    "./definitions/SocketType.json"
+  ],
+  [
+    "ActivityGraph",
+    "./definitions/ActivityGraph.json"
+  ],
+  [
+    "Checklist",
+    "./definitions/Checklist.json"
+  ],
+  [
+    "SandboxPerk",
+    "./definitions/SandboxPerk.json"
+  ],
+  [
+    "LoadoutColor",
+    "./definitions/LoadoutColor.json"
+  ],
+  [
+    "PresentationNode",
+    "./definitions/PresentationNode.json"
+  ],
+  [
+    "Activity",
+    "./definitions/Activity.json"
+  ],
+  [
+    "SandboxPattern",
+    "./definitions/SandboxPattern.json"
+  ],
+  [
+    "UnlockValue",
+    "./definitions/UnlockValue.json"
+  ],
+  [
+    "PlugSet",
+    "./definitions/PlugSet.json"
+  ],
+  [
+    "Record",
+    "./definitions/Record.json"
+  ],
+  [
+    "Collectible",
+    "./definitions/Collectible.json"
+  ],
+  [
+    "Lore",
+    "./definitions/Lore.json"
+  ],
+  [
+    "EquipmentSlot",
+    "./definitions/EquipmentSlot.json"
+  ],
+  [
+    "Objective",
+    "./definitions/Objective.json"
+  ],
+  [
+    "Vendor",
+    "./definitions/Vendor.json"
+  ],
+  [
+    "InventoryItemLite",
+    "./definitions/InventoryItemLite.json"
+  ],
+  [
+    "Unlock",
+    "./definitions/Unlock.json"
+  ],
+  [
+    "InventoryItem",
+    "./definitions/InventoryItem.json"
+  ]
 ];
+export const manifestVersion = "119016.23.09.18.1805-1-bnet.52208__en";

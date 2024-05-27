@@ -1,11 +1,12 @@
 import * as manifestNode from "@d2api/manifest-node";
+import { loadedVersion } from "@d2api/manifest";
 import fs from "fs/promises";
 import path from "path";
 
 manifestNode
   .load()
-  .then(async () => {
-    console.log("Loaded definitions");
+  .then(async (...args) => {
+    console.log("Loaded definitions", loadedVersion, ...args);
 
     const tables = [];
 
@@ -18,7 +19,10 @@ manifestNode
       tables.push([tableName, "./" + tablePath]);
     }
 
-    const defsListFile = `export default ${JSON.stringify(tables, null, 2)};`;
+    const defsListFile = `
+export default ${JSON.stringify(tables, null, 2)};
+export const manifestVersion = "${loadedVersion}";
+`;
 
     await fs.writeFile("./definitions-list.js", defsListFile);
 

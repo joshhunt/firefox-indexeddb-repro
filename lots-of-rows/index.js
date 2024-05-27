@@ -62,11 +62,11 @@ async function fetchDefinitions() {
 async function getAllRows() {
   log("\nLoading IDBObjectStore.openCursor() from IndexedDB\n");
 
-  const startMark = performance.mark("getAllRows-start");
+  const startMark = performance.mark("IDBObjectStore.openCursor start");
   const results = await indexedDBGetAllCursor();
-  const endMark = performance.mark("getAllRows-end");
+  const endMark = performance.mark("IDBObjectStore.openCursor end");
   const measureMark = performance.measure(
-    "getAllRows-duration",
+    "IDBObjectStore.openCursor duration",
     startMark.name,
     endMark.name
   );
@@ -79,7 +79,7 @@ async function getAllRows() {
 async function getAllRowsWithIndex() {
   log("\nLoading IDBIndex.openCursor() from IndexedDB\n");
 
-  const startMark = performance.mark("getAllRowsWithIndex-start");
+  const startMark = performance.mark("IDBIndex.openCursor start");
 
   const results = [];
   const db = await getDb();
@@ -98,9 +98,9 @@ async function getAllRowsWithIndex() {
   };
 
   function whenFinished(results) {
-    const endMark = performance.mark("getAllRowsWithIndex-end");
+    const endMark = performance.mark("IDBIndex.openCursor end");
     const measureMark = performance.measure(
-      "getAllRowsWithIndex-duration",
+      "IDBIndex.openCursor duration",
       startMark.name,
       endMark.name
     );

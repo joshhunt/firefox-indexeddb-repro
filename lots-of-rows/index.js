@@ -1,16 +1,17 @@
 import definitionsList from "../definitions-list.js";
 import {
   indexedDBPut,
-  indexedDBGet,
-  indexedDBGetAll,
-  indexedDBGetAllKeys,
   indexedDBGetAllCursor,
+  getDb,
+  STORE_NAME,
 } from "./idb.js";
 
 function log(msg) {
   outputEl.innerHTML += msg;
   window.scrollTo(0, document.body.scrollHeight);
 }
+
+const VERSION = "225530.24.05.01.1730-24-bnet.55439";
 
 async function fetchDefinitions() {
   let loadedCounter = 0;
@@ -42,6 +43,7 @@ async function fetchDefinitions() {
 
     for (const [key, definition] of entries) {
       const row = {
+        version: VERSION,
         tableName,
         key,
         definition,
@@ -57,7 +59,7 @@ async function fetchDefinitions() {
   log("Wrote all to IndexedDB.\n");
 }
 
-async function getAllRowsWithCursor() {
+async function getAllRows() {
   log("\nLoading IDBObjectStore.openCursor() from IndexedDB\n");
 
   const startTime = performance.now();
@@ -79,30 +81,93 @@ async function getAllRowsWithCursor() {
       byTable[tableName] = [];
     }
 
-    byTable[tableName].push(key);
+    byTable[tableName].push(definition);
   }
 
   // log number of rows for each table
   for (const tableName in byTable) {
     log(`${tableName}: ${byTable[tableName].length}\n`);
+
+    if (tableName === "Race") {
+      console.log(byTable[tableName]);
+    }
+  }
+}
+
+async function getAllRowsWithIndex() {
+  log("\nLoading IDBIndex.openCursor() from IndexedDB\n");
+
+  const startTime = performance.now();
+  console.time("load all with index cursor");
+
+  const results = [];
+  const db = await getDb();
+  const store = db.transaction(STORE_NAME, "readonly").objectStore(STORE_NAME);
+  const versionIndex = store.index("version");
+
+  let cursorRequest = versionIndex.openCursor(VERSION);
+  cursorRequest.onsuccess = (event) => {
+    const cursor = event.target.result;
+    if (cursor) {
+      results.push(cursor.value);
+      cursor.continue();
+    } else {
+      whenFinished(results);
+    }
+  };
+
+  function whenFinished(results) {
+    console.timeEnd("load all with index cursor");
+    const endTime = performance.now();
+
+    log(
+      `Loaded ${results.length} rows from IndexedDB in ${
+        endTime - startTime
+      }ms\n`
+    );
+
+    const byTable = {};
+
+    for (const row of results) {
+      const { tableName, key, definition } = row;
+
+      if (!byTable[tableName]) {
+        byTable[tableName] = [];
+      }
+
+      byTable[tableName].push(definition);
+    }
+
+    // log number of rows for each table
+    for (const tableName in byTable) {
+      log(`${tableName}: ${byTable[tableName].length}\n`);
+
+      if (tableName === "Race") {
+        console.log(byTable[tableName]);
+      }
+    }
   }
 }
 
 const outputEl = document.querySelector(".output");
-const fetchButtonEl = document.querySelector(".js-fetch-button");
-const idbLoadCursorButtonEl = document.querySelector(
-  ".js-idb-load-cursor-button"
-);
 
 function handleError(error) {
   console.error(error);
   log("\n\nERROR: " + error);
 }
 
-fetchButtonEl.addEventListener("click", () => {
+document.querySelector(".js-fetch-button").addEventListener("click", () => {
   fetchDefinitions().catch(handleError);
 });
 
-idbLoadCursorButtonEl.addEventListener("click", () => {
-  getAllRowsWithCursor().catch(handleError);
-});
+document
+  .querySelector(".js-idb-load-cursor-button")
+  .addEventListener("click", () => {
+    getAllRows().catch(handleError);
+  });
+
+document
+  .querySelector(".js-idb-load-cursor-index-button")
+  .addEventListener("click", () => {
+    getAllRowsWithIndex().catch(handleError);
+  });

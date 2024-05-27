@@ -1,7 +1,7 @@
 // Heavily inspired by https://github.com/jakearchibald/idb-keyval/blob/main/src/index.ts
 
-const DATABASE_NAME = "firefox-idb-repro-lots-of-rows";
-const STORE_NAME = "firefox-idb-repro-store-lots-of-rows";
+export const DATABASE_NAME = "firefox-idb-repro-lots-of-rows";
+export const STORE_NAME = "firefox-idb-repro-store-lots-of-rows";
 
 function promisifyRequest(request) {
   return new Promise((resolve, reject) => {
@@ -12,11 +12,17 @@ function promisifyRequest(request) {
 
 const dbOpenRequest = indexedDB.open(DATABASE_NAME);
 dbOpenRequest.onupgradeneeded = () => {
-  dbOpenRequest.result.createObjectStore(STORE_NAME, {
+  const store = dbOpenRequest.result.createObjectStore(STORE_NAME, {
     keyPath: ["tableName", "key"],
   });
+
+  store.createIndex("version", "version", { unique: false });
 };
 const dbPromise = promisifyRequest(dbOpenRequest);
+
+export function getDb() {
+  return dbPromise;
+}
 
 export async function indexedDBPut(value) {
   const db = await dbPromise;

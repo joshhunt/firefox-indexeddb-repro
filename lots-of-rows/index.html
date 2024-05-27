@@ -50,15 +50,22 @@
 
       <ol>
         <li>
-          Click
-          <button class="js-fetch-button">Fetch + write to IndexedDB</button> to
+          <button class="js-fetch-button">Fetch + write to IndexedDB</button> -
           download 190mb of JSON and store it across ~100k rows in IndexedDB
         </li>
 
         <li>
-          Click
-          <button class="js-idb-load-cursor-button">Load</button> to load all
-          ~100k rows using openCursor
+          <button class="js-idb-load-cursor-button">
+            Load IDBObjectStore.openCursor
+          </button>
+          - load all ~100k rows using store.openCursor
+        </li>
+
+        <li>
+          <button class="js-idb-load-cursor-index-button">
+            Load IDBIndex.openCursor
+          </button>
+          - load all ~100k rows using index.openCursor
         </li>
       </ol>
 
